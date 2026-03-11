@@ -25,8 +25,7 @@ export default function App() {
   })
 
   const countIncidentsByYear = countBy(data, "year")
-
-
+  
   const countByYearAndOrgTypeTrace = pivotToTraces(
     consolidateLongTail(data, 'organization_type', 4), 
     'year', 
@@ -34,7 +33,7 @@ export default function App() {
     items => items.length,
     {
       type: "bar",
-      colorscale: "Picnic"
+      hovertemplate: '%{fullData.name}<br>Year: %{x}<br>Count: %{y}<extra></extra>'
     },
     { otherLast: true }
   )
@@ -48,8 +47,13 @@ export default function App() {
         text: Object.values(countIncidentsByYear).map(String),
         textposition: 'auto',
         opacity: 0.8
-      }], { margin: { t: 0 } })
-    }
+      }], 
+      {
+        title: { 
+          text: "Incident Count by Year"
+        },
+      }
+    )}
   }, [])
 
   useEffect(() => {
@@ -58,6 +62,9 @@ export default function App() {
         stackedBarChartRef.current, 
         countByYearAndOrgTypeTrace,
         {
+          title: { 
+            text: "Incident Count by Year and Organization Type"
+          },
           barmode: "stack",
           colorway: [
             "#1A365D",
