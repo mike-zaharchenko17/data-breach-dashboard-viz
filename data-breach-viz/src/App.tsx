@@ -30,7 +30,10 @@ export default function App() {
       newPlot(basicBarChartRef.current, [{
         y: Object.values(countIncidentsByYear),
         x: Object.keys(countIncidentsByYear),
-        type: 'bar'
+        type: 'bar',
+        text: Object.values(countIncidentsByYear).map(String),
+        textposition: 'auto',
+        opacity: 0.8
       }], { margin: { t: 0 } })
     }
   }, [])
