@@ -12,6 +12,7 @@ export default function App() {
   const basicBarChartRef = useRef<HTMLDivElement | null>(null)
   const stackedBarChartRef = useRef<HTMLDivElement | null>(null)
   const sumRecordsLineChartRef = useRef<HTMLDivElement | null>(null)
+  const sumRecordsBarChartRef = useRef<HTMLDivElement | null>(null)
 
   const data = useMemo(() => {
       return csvParse(rawCsv, (d) => {
@@ -104,11 +105,37 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (sumRecordsBarChartRef.current) {
+      Plotly.newPlot(
+        sumRecordsBarChartRef.current, [{
+          x: Object.keys(sumRecordsByYear),
+          y: Object.values(sumRecordsByYear),
+          type: 'bar',
+          textposition: 'auto',
+          opacity: 0.8
+        }],
+        {
+          title: {
+            text: "Sum by year"
+          },
+          yaxis: { 
+            type: 'log',
+            title: {
+              text: 'Records (log scale)'
+            }
+          }
+        }
+      )
+    }
+  }, [])
+
   return (
     <>
       <div ref={basicBarChartRef} />
       <div ref={stackedBarChartRef} />
       <div ref={sumRecordsLineChartRef} />
+      <div ref={sumRecordsBarChartRef} />
     </>
 
   )
