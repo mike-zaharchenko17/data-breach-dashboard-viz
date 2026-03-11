@@ -74,12 +74,31 @@ export function sumGrouped<T, K extends keyof T>(
     return summed
 }
 
+export function countGrouped<T>(
+    groupObj: Record<string, T[]>,
+) : Record<string, number> {
+    return Object.fromEntries(
+        Object.entries(groupObj).map(([key, items]) => [
+            key,
+            items.length
+        ])
+    )
+}
+
 export function sumBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
     groupKey: K,
     sumKey: V
 ) {
     return sumGrouped(groupBy(array, groupKey), sumKey)
+}
+
+export function countBy<T, K extends keyof T, V extends keyof T>(
+    array: T[],
+    groupKey: K,
+    countKey: V
+) {
+    return sumGrouped(groupBy(array, groupKey), countKey)
 }
 
   
