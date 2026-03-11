@@ -58,6 +58,21 @@ export function groupBy<T, K extends keyof T>(
     }, {} as Record<string, T[]>)
 }
 
+export function groupBy2<T, K1 extends keyof T, K2 extends keyof T>(
+    array: T[],
+    key1: K1,
+    key2: K2
+): Record<string, Record<string, T[]>> {
+    return array.reduce((acc, item) => {
+        const k1 = String(item[key1])
+        const k2 = String(item[key2])
+        acc[k1] = acc[k1] ?? {}
+        acc[k1][k2] = acc[k1][k2] ?? []
+        acc[k1][k2].push(item)
+        return acc
+    }, {} as Record<string, Record<string, T[]>>)
+}
+
 /*
 
 AGGREGATORS
@@ -184,7 +199,20 @@ export function minBy<T, K extends keyof T, V extends keyof T>(
     return minGrouped(groupBy(array, groupKey), minKey)
 }
 
+/* Pivots for 2d groups */
 
-
-
-  
+export function pivotToTraces<T>(
+    array: T[],
+    xKey: keyof T,
+    seriesKey: keyof T,
+    aggregator: (items: T[]) => number  // sum, count, avg, etc.
+): { name: string; x: string[]; y: number[] }[] {
+    const grouped = groupBy2(array, seriesKey, xKey)
+    const allXValues = [...new Set(array.map(item => String(item[xKey])))].sort()
+    
+    return Object.entries(grouped).map(([seriesName, xGroups]) => ({
+        name: seriesName,
+        x: allXValues,
+        y: allXValues.map(xVal => aggregator(xGroups[xVal] ?? []))
+    }))
+}
