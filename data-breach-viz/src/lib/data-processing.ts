@@ -1,3 +1,5 @@
+import type { Data } from "plotly.js-dist-min"
+
 /* This module handles data grouping and aggregation */
 
 /*
@@ -205,14 +207,49 @@ export function pivotToTraces<T>(
     array: T[],
     xKey: keyof T,
     seriesKey: keyof T,
-    aggregator: (items: T[]) => number  // sum, count, avg, etc.
-): { name: string; x: string[]; y: number[] }[] {
+    aggregator: (items: T[]) => number,  // sum, count, avg, etc.
+    dataParams?: Data,
+    options?: { otherLast: boolean }
+): Data[] {
     const grouped = groupBy2(array, seriesKey, xKey)
     const allXValues = [...new Set(array.map(item => String(item[xKey])))].sort()
     
-    return Object.entries(grouped).map(([seriesName, xGroups]) => ({
+    let traces = Object.entries(grouped).map(([seriesName, xGroups]) => ({
         name: seriesName,
         x: allXValues,
-        y: allXValues.map(xVal => aggregator(xGroups[xVal] ?? []))
+        y: allXValues.map(xVal => aggregator(xGroups[xVal] ?? [])),
+        ...dataParams,
+    }))
+
+    if (options?.otherLast) {
+        traces = traces.sort((a, b) => {
+            if (a.name === "other") return -1
+            if (b.name === "other") return 1
+            return 0
+        })
+    }
+
+    return traces
+}
+
+export function consolidateLongTail<T, K extends keyof T>(
+    array: T[],
+    categoryKey: K,
+    topN: number,
+    aggregator: (items: T[]) => number = items => items.length,
+    otherLabel: string = 'other'
+): T[] {
+    const grouped = groupBy(array, categoryKey)
+    const ranked = Object.entries(grouped)
+        .map(([category, items]) => ({ category, value: aggregator(items) }))
+        .sort((a, b) => b.value - a.value)
+    
+    const topCategories = new Set(ranked.slice(0, topN).map(r => r.category))
+    
+    return array.map(item => ({
+        ...item,
+        [categoryKey]: topCategories.has(String(item[categoryKey])) 
+            ? item[categoryKey] 
+            : otherLabel
     }))
 }

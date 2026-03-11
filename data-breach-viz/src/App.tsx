@@ -1,15 +1,16 @@
 import './App.css'
 import rawCsv from "./assets/data-breach-set-clean.csv?raw"
 import { csvParse } from 'd3-dsv'
-import { newPlot } from 'plotly.js-dist-min'
+import Plotly from "plotly.js-dist-min"
 
-import { countBy } from './lib/data-processing'
+import { countBy, pivotToTraces, consolidateLongTail } from './lib/data-processing'
 
 import { useRef, useEffect } from "react" 
 
 export default function App() {
 
   const basicBarChartRef = useRef<HTMLDivElement | null>(null)
+  const stackedBarChartRef = useRef<HTMLDivElement | null>(null)
 
   const data = csvParse(rawCsv, (d) => {
       const formatted = {
@@ -25,11 +26,24 @@ export default function App() {
 
   const countIncidentsByYear = countBy(data, "year")
 
+
+  const countByYearAndOrgTypeTrace = pivotToTraces(
+    consolidateLongTail(data, 'organization_type', 4), 
+    'year', 
+    'organization_type', 
+    items => items.length,
+    {
+      type: "bar",
+      colorscale: "Picnic"
+    },
+    { otherLast: true }
+  )
+
   useEffect(() => {
     if (basicBarChartRef.current) {
-      newPlot(basicBarChartRef.current, [{
-        y: Object.values(countIncidentsByYear),
+      Plotly.newPlot(basicBarChartRef.current, [{
         x: Object.keys(countIncidentsByYear),
+        y: Object.values(countIncidentsByYear),
         type: 'bar',
         text: Object.values(countIncidentsByYear).map(String),
         textposition: 'auto',
@@ -38,9 +52,24 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (stackedBarChartRef.current) {
+      Plotly.newPlot(
+        stackedBarChartRef.current, 
+        countByYearAndOrgTypeTrace,
+        {
+          barmode: "stack"
+        }
+      )
+    }
+  })
+
   return (
-    <div ref={basicBarChartRef}>
-    </div>
+    <>
+      <div ref={basicBarChartRef} />
+      <div ref={stackedBarChartRef} />
+    </>
+
   )
 }
 
