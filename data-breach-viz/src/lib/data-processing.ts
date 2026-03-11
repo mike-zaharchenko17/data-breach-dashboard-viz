@@ -56,6 +56,12 @@ export function groupBy<T, K extends keyof T>(
     }, {} as Record<string, T[]>)
 }
 
+/*
+
+<action>Grouped function takes the result of a groupByCall Record<string, T[]>
+and performs a groupwise mapping into a new object that is { groupKey: aggregate }
+
+*/
 export function sumGrouped<T, K extends keyof T>(
     groupObj: Record<string, T[]>,
     field: K
@@ -98,11 +104,37 @@ export function averageGrouped<T, K extends keyof T>(
     )
 }
 
+export function maxGrouped<T, K extends keyof T>(
+    groupObj: Record<string, T[]>,
+    field: K
+) {
+    return Object.fromEntries(
+        Object.entries(groupObj).map(([key, items]) => [
+            key,
+            Math.max(...flattenByKey(items, field) as number[])
+        ])
+    )
+}
+
+export function minGrouped<T, K extends keyof T>(
+    groupObj: Record<string, T[]>,
+    field: K
+) {
+    return Object.fromEntries(
+        Object.entries(groupObj).map(([key, items]) => [
+            key,
+            Math.min(...flattenByKey(items, field) as number[])
+        ])
+    )
+}
+
+// composers- allow you to perform grouping and aggregation in one step
+
 export function sumBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
     groupKey: K,
     sumKey: V
-) {
+) : Record<string, number> {
     return sumGrouped(groupBy(array, groupKey), sumKey)
 }
 
@@ -110,7 +142,7 @@ export function countBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
     groupKey: K,
     countKey: V
-) {
+) : Record<string, number> {
     return sumGrouped(groupBy(array, groupKey), countKey)
 }
 
@@ -118,9 +150,27 @@ export function averageBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
     groupKey: K,
     avgKey: V
-) {
+) : Record<string, number> {
     return averageGrouped(groupBy(array, groupKey), avgKey)
 }
+
+export function maxBy<T, K extends keyof T, V extends keyof T>(
+    array: T[],
+    groupKey: K,
+    maxKey: V
+) {
+    return maxGrouped(groupBy(array, groupKey), maxKey)
+}
+
+export function minBy<T, K extends keyof T, V extends keyof T>(
+    array: T[],
+    groupKey: K,
+    minKey: V
+) : Record<string, number> {
+    return minGrouped(groupBy(array, groupKey), minKey)
+}
+
+
 
 
   
