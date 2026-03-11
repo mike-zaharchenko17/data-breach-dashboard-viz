@@ -6,6 +6,7 @@ import Plotly from "plotly.js-dist-min"
 import { countBy, sumBy, pivotToTraces, consolidateLongTail } from './lib/data-processing'
 
 import { useRef, useEffect, useMemo } from "react" 
+import DashboardContainer from './lib/components/container'
 
 export default function App() {
 
@@ -136,6 +137,7 @@ export default function App() {
       <div ref={stackedBarChartRef} />
       <div ref={sumRecordsLineChartRef} />
       <div ref={sumRecordsBarChartRef} />
+      <DashboardContainer data={data} />
     </>
 
   )
