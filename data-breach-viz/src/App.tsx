@@ -133,10 +133,6 @@ export default function App() {
 
   return (
     <>
-      <div ref={basicBarChartRef} />
-      <div ref={stackedBarChartRef} />
-      <div ref={sumRecordsLineChartRef} />
-      <div ref={sumRecordsBarChartRef} />
       <DashboardContainer data={data} />
     </>
 
