@@ -5,24 +5,26 @@ import Plotly from "plotly.js-dist-min"
 
 import { countBy, pivotToTraces, consolidateLongTail } from './lib/data-processing'
 
-import { useRef, useEffect } from "react" 
+import { useRef, useEffect, useMemo } from "react" 
 
 export default function App() {
 
   const basicBarChartRef = useRef<HTMLDivElement | null>(null)
   const stackedBarChartRef = useRef<HTMLDivElement | null>(null)
 
-  const data = csvParse(rawCsv, (d) => {
-      const formatted = {
-          entity: d.entity,
-          year: +d.year,
-          records: +d.records,
-          organization_type: d.organization_type,
-          method: d.method
-      }
+  const data = useMemo(() => {
+      return csvParse(rawCsv, (d) => {
+        const formatted = {
+            entity: d.entity,
+            year: +d.year,
+            records: +d.records,
+            organization_type: d.organization_type,
+            method: d.method
+        }
 
-      return formatted
-  })
+        return formatted
+    })
+  }, [])
 
   const countIncidentsByYear = countBy(data, "year")
   
