@@ -18,6 +18,8 @@ export function flattenByKey<T, K extends keyof T>(array: T[], key: K) {
 
 /*
 
+GROUP BY
+
 1. initialize with an empty object that expects shape { string: T[] }
 2. extract the key from the item (parsed DSV) and key the accumulator w/ it
 3. access the array at that group key and push the item onto it
@@ -57,6 +59,8 @@ export function groupBy<T, K extends keyof T>(
 }
 
 /*
+
+AGGREGATORS
 
 <action>Grouped function takes the result of a groupByCall Record<string, T[]>
 and performs a groupwise mapping into a new object that is { groupKey: aggregate }
@@ -128,7 +132,18 @@ export function minGrouped<T, K extends keyof T>(
     )
 }
 
-// composers- allow you to perform grouping and aggregation in one step
+/*
+COMPOSERS
+
+composers allow you to chain an group call and an aggregator call in one
+
+CSV shape T[] 
+-> 
+Grouped Shape { groupKey: T[] } 
+-> 
+Aggregate Shape { groupKey: aggVal }
+
+*/
 
 export function sumBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
