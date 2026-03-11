@@ -3,13 +3,13 @@ import rawCsv from "./assets/data-breach-set-clean.csv?raw"
 import { csvParse } from 'd3-dsv'
 import { newPlot } from 'plotly.js-dist-min'
 
-import { countBy, flattenByKey } from './lib/data-processing'
+import { countBy } from './lib/data-processing'
 
 import { useRef, useEffect } from "react" 
 
 export default function App() {
 
-  const plotRef = useRef<HTMLDivElement | null>(null)
+  const basicBarChartRef = useRef<HTMLDivElement | null>(null)
 
   const data = csvParse(rawCsv, (d) => {
       const formatted = {
@@ -25,17 +25,9 @@ export default function App() {
 
   const countIncidentsByYear = countBy(data, "year")
 
-  console.log(JSON.stringify(countIncidentsByYear))
-
-  console.log("Total:")
-
-  const totalIncidentsByYear = Object.values(countIncidentsByYear).reduce((a, c) => a + c, 0)
-
-  console.log(totalIncidentsByYear)
-
   useEffect(() => {
-    if (plotRef.current) {
-      newPlot(plotRef.current, [{
+    if (basicBarChartRef.current) {
+      newPlot(basicBarChartRef.current, [{
         y: Object.values(countIncidentsByYear),
         x: Object.keys(countIncidentsByYear),
         type: 'bar'
@@ -44,7 +36,7 @@ export default function App() {
   }, [])
 
   return (
-    <div ref={plotRef}>
+    <div ref={basicBarChartRef}>
     </div>
   )
 }
