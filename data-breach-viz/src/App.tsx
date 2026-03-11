@@ -3,7 +3,7 @@ import rawCsv from "./assets/data-breach-set-clean.csv?raw"
 import { csvParse } from 'd3-dsv'
 import { newPlot } from 'plotly.js-dist-min'
 
-import { flattenByKey } from './lib/data-processing'
+import { countBy, flattenByKey } from './lib/data-processing'
 
 import { useRef, useEffect } from "react" 
 
@@ -23,8 +23,15 @@ export default function App() {
       return formatted
   })
 
-  console.log("FBK:")
-  console.log(JSON.stringify(flattenByKey(data, "year")))
+  const countIncidentsByYear = countBy(data, "year")
+
+  console.log(JSON.stringify(countIncidentsByYear))
+
+  console.log("Total:")
+
+  const totalIncidentsByYear = Object.values(countIncidentsByYear).reduce((a, c) => a + c, 0)
+
+  console.log(totalIncidentsByYear)
 
   useEffect(() => {
     if (plotRef.current) {

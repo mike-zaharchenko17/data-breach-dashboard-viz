@@ -153,12 +153,11 @@ export function sumBy<T, K extends keyof T, V extends keyof T>(
     return sumGrouped(groupBy(array, groupKey), sumKey)
 }
 
-export function countBy<T, K extends keyof T, V extends keyof T>(
+export function countBy<T, K extends keyof T>(
     array: T[],
     groupKey: K,
-    countKey: V
 ) : Record<string, number> {
-    return sumGrouped(groupBy(array, groupKey), countKey)
+    return countGrouped(groupBy(array, groupKey))
 }
 
 export function averageBy<T, K extends keyof T, V extends keyof T>(
