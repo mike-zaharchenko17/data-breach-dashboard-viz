@@ -56,4 +56,30 @@ export function groupBy<T, K extends keyof T>(
     }, {} as Record<string, T[]>)
 }
 
+export function sumGrouped<T, K extends keyof T>(
+    groupObj: Record<string, T[]>,
+    field: K
+) : Record<string, number> {
+    const summed : Record<string, number> = {}
+    for (const k of Object.keys(groupObj)) {
+        summed[k] = 0
+        groupObj[k].forEach((val) => {
+            if (typeof val[field] === "number") {
+                summed[k] = summed[k] + val[field]
+            } else {
+                throw new Error("Must be number")
+            }
+        })
+    }
+    return summed
+}
+
+export function sumBy<T, K extends keyof T, V extends keyof T>(
+    array: T[],
+    groupKey: K,
+    sumKey: V
+) {
+    return sumGrouped(groupBy(array, groupKey), sumKey)
+}
+
   
