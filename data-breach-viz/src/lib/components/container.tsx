@@ -49,12 +49,16 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <RQ1 data={data} />
             </div>
 
-            {/* <div className="w-[800px]">
+            {/*             
+            
+            <div className="w-[800px]">
                 <RQ2 data={data} />
             </div>
             <div className="w-[800px]">
                 <RQ3 data={data} />
-            </div> */}
+            </div> 
+
+            */}
         </div>
     )
 }
