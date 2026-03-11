@@ -42,9 +42,15 @@ export default function App() {
     items => items.length,
     {
       type: "bar",
-      hovertemplate: '%{fullData.name}<br>Year: %{x}<br>Count: %{y}<extra></extra>'
+      hovertemplate: `
+        %{fullData.name}
+        <br>
+        Year: %{x}
+        <br>
+        Count: %{y}
+        <extra></extra>
+      `
     },
-    { otherLast: true }
   )
 
   useEffect(() => {

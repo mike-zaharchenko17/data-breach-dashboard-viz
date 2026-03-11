@@ -4,7 +4,7 @@ import { computeKPIs } from "../computation";
 import KPICard from "./kpi-card";
 import { useMemo } from "react";
 
-import RQ1 from "./charts/rq1";
+import RQ1 from "./charts/rq1-alternate";
 // import RQ2 from "./charts/rq2";
 // import RQ3 from "./charts/rq3";
 
