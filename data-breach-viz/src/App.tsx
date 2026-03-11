@@ -11,10 +11,6 @@ export default function App() {
 
   const plotRef = useRef<HTMLDivElement | null>(null)
 
-  const methodMap : Record<string, number> = {}
-
-  const industryMap : Record<string, number> = {}
-
   const data = csvParse(rawCsv, (d) => {
       const formatted = {
           entity: d.entity,
@@ -23,10 +19,6 @@ export default function App() {
           organization_type: d.organization_type,
           method: d.method
       }
-
-      methodMap[formatted.method] = methodMap[formatted.method] ? methodMap[formatted.method] += 1 : 1
-
-      industryMap[formatted.organization_type] = industryMap[formatted.organization_type] ? industryMap[formatted.organization_type] += 1 : 1
 
       return formatted
   })
