@@ -36,8 +36,9 @@ export default function App() {
   useEffect(() => {
     if (plotRef.current) {
       newPlot(plotRef.current, [{
-        x: flattenByKey(data, "year"),
-        y: flattenByKey(data, "records"),
+        y: Object.values(countIncidentsByYear),
+        x: Object.keys(countIncidentsByYear),
+        type: 'bar'
       }], { margin: { t: 0 } })
     }
   }, [])
