@@ -85,6 +85,19 @@ export function countGrouped<T>(
     )
 }
 
+export function averageGrouped<T, K extends keyof T>(
+    groupObj: Record<string, T[]>,
+    field: K
+) : Record<string, number> {
+    const summed = sumGrouped(groupObj, field)
+    return Object.fromEntries(
+        Object.entries(groupObj).map(([key, items]) => [
+            key,
+            summed[key] / (items.length || 1)
+        ])
+    )
+}
+
 export function sumBy<T, K extends keyof T, V extends keyof T>(
     array: T[],
     groupKey: K,
@@ -100,5 +113,14 @@ export function countBy<T, K extends keyof T, V extends keyof T>(
 ) {
     return sumGrouped(groupBy(array, groupKey), countKey)
 }
+
+export function averageBy<T, K extends keyof T, V extends keyof T>(
+    array: T[],
+    groupKey: K,
+    avgKey: V
+) {
+    return averageGrouped(groupBy(array, groupKey), avgKey)
+}
+
 
   
