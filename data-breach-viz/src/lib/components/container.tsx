@@ -45,6 +45,9 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <KPICard label="Top Method" value={mostCommonMethod} />
             </div>
             <div className="w-[800px]">
+                <RQ1 data={data} />
+            </div>
+            <div className="w-[800px]">
                 <RQ2 data={data} />
             </div>
             <div className="w-[800px]">
