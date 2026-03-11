@@ -58,7 +58,15 @@ export default function App() {
         stackedBarChartRef.current, 
         countByYearAndOrgTypeTrace,
         {
-          barmode: "stack"
+          barmode: "stack",
+          colorway: [
+            "#1A365D",
+            "#2B6CB0",
+            "#4299E1",
+            "#63B3ED",
+            "#4FD1C5",
+            "#81E6D9"
+          ]
         }
       )
     }
