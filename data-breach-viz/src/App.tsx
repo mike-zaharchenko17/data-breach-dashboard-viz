@@ -3,6 +3,8 @@ import rawCsv from "./assets/data-breach-set-clean.csv?raw"
 import { csvParse } from 'd3-dsv'
 import { newPlot } from 'plotly.js-dist-min'
 
+import { flattenByKey } from './lib/data-processing'
+
 import { useRef, useEffect } from "react" 
 
 export default function App() {
@@ -29,13 +31,14 @@ export default function App() {
       return formatted
   })
 
-  console.log(JSON.stringify(data, null, 2))
+  console.log("FBK:")
+  console.log(JSON.stringify(flattenByKey(data, "year")))
 
   useEffect(() => {
     if (plotRef.current) {
       newPlot(plotRef.current, [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 4, 8, 16]
+        x: flattenByKey(data, "year"),
+        y: flattenByKey(data, "records"),
       }], { margin: { t: 0 } })
     }
   }, [])
