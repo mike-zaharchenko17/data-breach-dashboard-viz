@@ -11,12 +11,15 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
+    "d3-dsv": "^3.0.1",
+    "plotly.js": "^3.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/d3-dsv": "^3.0.7",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
