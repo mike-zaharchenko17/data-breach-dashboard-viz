@@ -3,7 +3,7 @@ import rawCsv from "./assets/data-breach-set-clean.csv?raw"
 import { csvParse } from 'd3-dsv'
 import Plotly from "plotly.js-dist-min"
 
-import { countBy, pivotToTraces, consolidateLongTail } from './lib/data-processing'
+import { countBy, sumBy, pivotToTraces, consolidateLongTail } from './lib/data-processing'
 
 import { useRef, useEffect, useMemo } from "react" 
 
@@ -11,6 +11,7 @@ export default function App() {
 
   const basicBarChartRef = useRef<HTMLDivElement | null>(null)
   const stackedBarChartRef = useRef<HTMLDivElement | null>(null)
+  const sumRecordsLineChartRef = useRef<HTMLDivElement | null>(null)
 
   const data = useMemo(() => {
       return csvParse(rawCsv, (d) => {
@@ -27,6 +28,10 @@ export default function App() {
   }, [])
 
   const countIncidentsByYear = countBy(data, "year")
+
+  const sumRecordsByYear = sumBy(data, 'year', 'records')
+
+  console.log(sumRecordsByYear)
   
   const countByYearAndOrgTypeTrace = pivotToTraces(
     consolidateLongTail(data, 'organization_type', 4), 
@@ -81,10 +86,29 @@ export default function App() {
     }
   })
 
+  useEffect(() => {
+    if (sumRecordsLineChartRef.current) {
+      Plotly.newPlot(
+        sumRecordsLineChartRef.current, [{
+          x: Object.keys(sumRecordsByYear),
+          y: Object.values(sumRecordsByYear),
+          type: 'scatter',
+          mode: 'lines+markers'
+        }],
+        {
+          title: {
+            text: "Sum by year"
+          }
+        }
+      )
+    }
+  }, [])
+
   return (
     <>
       <div ref={basicBarChartRef} />
       <div ref={stackedBarChartRef} />
+      <div ref={sumRecordsLineChartRef} />
     </>
 
   )
