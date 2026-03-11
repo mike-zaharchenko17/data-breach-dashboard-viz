@@ -209,7 +209,6 @@ export function pivotToTraces<T>(
     seriesKey: keyof T,
     aggregator: (items: T[]) => number,  // sum, count, avg, etc.
     dataParams?: Data,
-    options?: { otherLast: boolean }
 ): Data[] {
     const grouped = groupBy2(array, seriesKey, xKey)
     const allXValues = [...new Set(array.map(item => String(item[xKey])))].sort()
@@ -221,13 +220,13 @@ export function pivotToTraces<T>(
         ...dataParams,
     }))
 
-    if (options?.otherLast) {
-        traces = traces.sort((a, b) => {
-            if (a.name === "other") return -1
-            if (b.name === "other") return 1
-            return 0
-        })
-    }
+    traces = traces.sort((a, b) => {
+        if (a.name === "Other" || a.name === "other") return -1
+        if (b.name === "Other" || b.name === "other") return 1
+        const sumA = (a.y as number[]).reduce((s, v) => s + v, 0)
+        const sumB = (b.y as number[]).reduce((s, v) => s + v, 0)
+        return sumA - sumB
+    })
 
     return traces
 }
