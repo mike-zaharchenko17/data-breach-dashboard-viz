@@ -19,8 +19,20 @@ export default function RQ1({ data } : RQ1Props) {
             Plotly.newPlot(sumRecordsBarChartRef.current, [{
                 x: Object.keys(sumRecordsByYear),
                 y: Object.values(sumRecordsByYear),
-                type: 'bar'
-            }], { title: { text: "Bar Chart" } })
+                type: 'bar',
+                textposition: 'auto',
+                opacity: 0.8
+            }], { 
+                title: { 
+                    text: "Records Exposed by Year" 
+                } ,
+                yaxis: {
+                    type: 'log',
+                    title: {
+                        text: 'Records (log scale)'
+                    }
+                }
+            })
         }
         
         if (activeTab === "tab2" && sumRecordsLineChartRef.current) {
@@ -29,7 +41,7 @@ export default function RQ1({ data } : RQ1Props) {
                 y: Object.values(sumRecordsByYear),
                 type: 'scatter',
                 mode: 'lines+markers'
-            }], { title: { text: "Line Chart" } })
+            }], { title: { text: "Records Exposed by Year" } })
         }
     }, [activeTab])
 
@@ -40,16 +52,12 @@ export default function RQ1({ data } : RQ1Props) {
                 <Tabs.List aria-label="tabs example">
                     <Tabs.Trigger value="tab1">One</Tabs.Trigger>
                     <Tabs.Trigger value="tab2">Two</Tabs.Trigger>
-                    <Tabs.Trigger value="tab3">Three</Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="tab1">
-                    <div ref={sumRecordsBarChartRef} />
+                    <div ref={sumRecordsBarChartRef} style={{ width: 900, height: 600 }} />
                 </Tabs.Content>
                 <Tabs.Content value="tab2">
-                    <div ref={sumRecordsLineChartRef} />
-                </Tabs.Content>
-                <Tabs.Content value="tab3">
-                    <div id="sum-record-scatter" />
+                    <div ref={sumRecordsLineChartRef} style={{ width: 900, height: 600 }} />
                 </Tabs.Content>
             </Tabs.Root>
         </div>
