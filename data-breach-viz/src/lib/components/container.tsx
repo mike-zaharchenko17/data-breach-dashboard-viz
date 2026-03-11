@@ -5,8 +5,8 @@ import KPICard from "./kpi-card";
 import { useMemo } from "react";
 
 import RQ1 from "./charts/rq1";
-import RQ2 from "./charts/rq2";
-import RQ3 from "./charts/rq3";
+// import RQ2 from "./charts/rq2";
+// import RQ3 from "./charts/rq3";
 
 export interface DashboardContainerProps {
    data: DSVParsedArray<{
@@ -36,7 +36,7 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <h1 className="text-2xl font-bold text-slate-800">
                     Data Breach Dashboard
                 </h1>
-                <p className="text-slate-500">2004 to 2022</p>
+                <p className="text-slate-500">2004 - 2022</p>
             </header>
             <div className="grid grid-cols-4 gap-4 mb-6">
                 <KPICard label="Total Breaches" value={totalBreaches} />
@@ -44,15 +44,17 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <KPICard label="Peak Year" value={peakYear} />
                 <KPICard label="Top Method" value={mostCommonMethod} />
             </div>
-            <div className="w-[800px]">
+
+            <div className="bg-white rounded-lg shadow p-4 mb-6">
                 <RQ1 data={data} />
             </div>
-            <div className="w-[800px]">
+
+            {/* <div className="w-[800px]">
                 <RQ2 data={data} />
             </div>
             <div className="w-[800px]">
                 <RQ3 data={data} />
-            </div>
+            </div> */}
         </div>
     )
 }

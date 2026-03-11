@@ -30,7 +30,8 @@ export default function RQ1({ data } : RQ1Props) {
                     type: 'log',
                     title: {
                         text: 'Records (log scale)'
-                    }
+                    },
+                    dtick: 1
                 }
             })
         }
