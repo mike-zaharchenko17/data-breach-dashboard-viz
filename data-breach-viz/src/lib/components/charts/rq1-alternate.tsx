@@ -109,7 +109,8 @@ export default function RQ1({ data } : RQ1Props) {
                 xaxis: { title: { text: 'Number of Incidents' } },
                 yaxis: { 
                     title: { text: 'Average Records per Incident' },
-                    type: 'log'
+                    type: 'log',
+                    dtick: 1
                 }
             })
         }
@@ -136,7 +137,7 @@ export default function RQ1({ data } : RQ1Props) {
                         value="tab3" 
                         className="px-4 py-2 bg-slate-600 hover:bg-slate-300 data-[state=active]:bg-sky-600 data-[state=active]:text-white rounded-md transition-colors"
                     >
-                        Bubble
+                        Count vs Severity by Org
                     </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="tab1">
