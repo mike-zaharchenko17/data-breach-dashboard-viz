@@ -48,12 +48,12 @@ export default function RQ1({ data } : RQ1Props) {
                         text: "Records Lost by Year and Organization Type"
                     },
                     colorway: [
-                        "#1A365D",
-                        "#2B6CB0",
-                        "#4299E1",
-                        "#63B3ED",
-                        "#4FD1C5",
-                        "#81E6D9"
+                        "#E57373",  // muted red
+                        "#FFB74D",  // muted orange
+                        "#FFF176",  // muted yellow
+                        "#81C784",  // muted green
+                        "#64B5F6",  // muted blue
+                        "#BA68C8"   // muted purple
                     ],
                     xaxis: {
                         title: { text: 'Year' }
