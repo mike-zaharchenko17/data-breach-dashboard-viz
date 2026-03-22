@@ -33,7 +33,7 @@ export default function RQ2({ data } : RQ2Props) {
 
     return (
         <div className="flex">
-            <div ref={boxPlotRef} style={{ width: 900, height: 650 }}/>
+            <div ref={boxPlotRef} style={{ width: 600, height: 500 }}/>
         </div>
     )
 }
