@@ -5,6 +5,7 @@ import KPICard from "./kpi-card";
 import { useMemo } from "react";
 
 import RQ1 from "./charts/rq1-alternate";
+import RQ2 from "./charts/rq2";
 // import RQ2 from "./charts/rq2";
 // import RQ3 from "./charts/rq3";
 
@@ -49,16 +50,16 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <RQ1 data={data} />
             </div>
 
-            {/*             
+                        
             
             <div className="w-[800px]">
                 <RQ2 data={data} />
             </div>
-            <div className="w-[800px]">
+            {/* <div className="w-[800px]">
                 <RQ3 data={data} />
-            </div> 
+            </div>  */}
 
-            */}
+           
         </div>
     )
 }
