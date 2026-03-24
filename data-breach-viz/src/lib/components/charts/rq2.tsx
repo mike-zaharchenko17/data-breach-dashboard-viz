@@ -30,8 +30,6 @@ export default function RQ2({ data } : RQ2Props) {
         }
     }, [])
 
-
-
     return (
         <div className="w-full">
             <div ref={boxPlotRef} style={{ width: '100%', height: 450 }} />
