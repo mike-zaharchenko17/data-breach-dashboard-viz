@@ -22,18 +22,19 @@ export default function RQ2({ data } : RQ2Props) {
                 title: { text: 'Records Lost by Breach Method' },
                 yaxis: { 
                     title: { text: 'Records' },
-                    type: 'log'  // log scale helps with extreme outliers
+                    type: 'log'
                 },
-                xaxis: { title: { text: 'Method' } }
-            })
+                xaxis: { title: { text: 'Method' } },
+                autosize: true
+            }, { responsive: true })
         }
     }, [])
 
 
 
     return (
-        <div className="flex">
-            <div ref={boxPlotRef} style={{ width: 600, height: 500 }}/>
+        <div className="w-full">
+            <div ref={boxPlotRef} style={{ width: '100%', height: 450 }} />
         </div>
     )
 }
