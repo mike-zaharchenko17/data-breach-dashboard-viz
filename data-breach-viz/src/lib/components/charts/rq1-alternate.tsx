@@ -2,7 +2,7 @@ import type { DashboardContainerProps } from "../container";
 import { Tabs } from "radix-ui";
 import Plotly from "plotly.js-dist-min"
 import { useEffect, useRef, useState } from "react"
-import { consolidateLongTail, groupBy, pivotToTraces, sumBy } from "../../data-processing";
+import { consolidateLongTail, pivotToTraces, sumBy } from "../../data-processing";
 
 interface RQ1Props extends DashboardContainerProps {}
 
