@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import RQ1 from "./charts/rq1-alternate";
 import RQ2 from "./charts/rq2";
 import RQ3 from "./charts/rq3";
+import RQ1FrequencySeverity from "./charts/frequency-severity-chart";
 
 export interface DashboardContainerProps {
    data: DSVParsedArray<{
@@ -48,6 +49,13 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
             <div className="bg-white rounded-lg shadow p-4 mb-6">
                 <RQ1 data={data} />
             </div>
+
+
+            <div className="flex bg-white rounded-lg shadow p-4 mb-6">
+                <RQ1FrequencySeverity data={data} />
+            </div>
+
+
 
             <div className="bg-white rounded-lg shadow p-4 mb-6">
                 <div className="flex justify-between gap-6">

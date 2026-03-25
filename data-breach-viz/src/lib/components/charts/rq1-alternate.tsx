@@ -9,7 +9,6 @@ interface RQ1Props extends DashboardContainerProps {}
 export default function RQ1({ data } : RQ1Props) {
     const sumRecordsBarChartRef = useRef<HTMLDivElement | null>(null)
     const sumRecordsAreaChartRef = useRef<HTMLDivElement | null>(null)
-    const bubbleChartRef = useRef<HTMLDivElement | null>(null)
 
     const sumRecordsByYear = sumBy(data, 'year', 'records')
     const consolidatedData = consolidateLongTail(data, 'organization_type', 5)
@@ -27,14 +26,6 @@ export default function RQ1({ data } : RQ1Props) {
             hovertemplate: '%{fullData.name}<br>Year: %{x}<br>Records: %{y}<extra></extra>'
         }
     )
-
-    // Bubble chart data: incidents vs avg records by org type
-    const orgStats = Object.entries(groupBy(data, 'organization_type')).map(([org, items]) => ({
-        org,
-        incidentCount: items.length,
-        avgRecords: items.reduce((s, i) => s + i.records, 0) / items.length,
-        totalRecords: items.reduce((s, i) => s + i.records, 0)
-    }))
 
     const [activeTab, setActiveTab] = useState("tab1")
 
@@ -85,35 +76,6 @@ export default function RQ1({ data } : RQ1Props) {
                 }
             })
         }
-
-        if (activeTab === "tab3" && bubbleChartRef.current) {
-            const sizes = orgStats.map(d => d.totalRecords)
-            const desiredMaxSize = 60
-            
-            Plotly.newPlot(bubbleChartRef.current, [{
-                x: orgStats.map(d => d.incidentCount),
-                y: orgStats.map(d => d.avgRecords),
-                text: orgStats.map(d => d.org),
-                mode: 'markers',
-                marker: {
-                    size: sizes,
-                    sizemode: 'area',
-                    sizeref: 2.0 * Math.max(...sizes) / (desiredMaxSize ** 2),
-                    color: orgStats.map((_, i) => i),
-                    colorscale: 'Blues',
-                    showscale: false
-                },
-                hovertemplate: '<b>%{text}</b><br>Incidents: %{x}<br>Avg Records: %{y:.2s}<br><extra></extra>'
-            }], {
-                title: { text: 'Incident Count vs Severity by Organization Type' },
-                xaxis: { title: { text: 'Number of Incidents' } },
-                yaxis: { 
-                    title: { text: 'Average Records per Incident' },
-                    type: 'log',
-                    dtick: 1
-                }
-            })
-        }
     }, [activeTab])
 
 
@@ -133,21 +95,12 @@ export default function RQ1({ data } : RQ1Props) {
                     >
                         Total Loss YoY
                     </Tabs.Trigger>
-                    <Tabs.Trigger 
-                        value="tab3" 
-                        className="px-4 py-2 bg-slate-600 hover:bg-slate-300 data-[state=active]:bg-sky-600 data-[state=active]:text-white rounded-md transition-colors"
-                    >
-                        Count vs Severity by Org
-                    </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="tab1">
                     <div ref={sumRecordsAreaChartRef} style={{ width: 900, height: 650 }} />
                 </Tabs.Content>
                 <Tabs.Content value="tab2">
                     <div ref={sumRecordsBarChartRef} style={{ width: 900, height: 650 }} />
-                </Tabs.Content>
-                <Tabs.Content value="tab3">
-                    <div ref={bubbleChartRef} style={{ width: 900, height: 650 }} />
                 </Tabs.Content>
             </Tabs.Root>
         </div>
