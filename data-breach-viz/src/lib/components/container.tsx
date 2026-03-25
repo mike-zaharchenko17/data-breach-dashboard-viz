@@ -46,27 +46,39 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <KPICard label="Top Method" value={mostCommonMethod} />
             </div>
 
-            <div className="bg-white rounded-lg shadow p-4 mb-6">
-                <RQ1 data={data} />
-            </div>
-
-
-            <div className="flex bg-white rounded-lg shadow p-4 mb-6">
-                <RQ1FrequencySeverity data={data} />
-            </div>
-
-
-
-            <div className="bg-white rounded-lg shadow p-4 mb-6">
-                <div className="flex justify-between gap-6">
-                    <div className="flex-1">
-                        <RQ2 data={data} />
-                    </div>
-                    <div className="flex-1">
-                        <RQ3 data={data} />
-                    </div>
+            <div className="mb-6">
+                 <h2 className="text-xl font-semibold text-slate-700 mb-3">
+                    Breach Volume Over Time
+                </h2>
+                <div className="bg-white rounded-lg shadow p-4 mb-6">
+                    <RQ1 data={data} />
                 </div>
             </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-700 mb-3">
+                    Industry Impact
+                </h2>
+                <div className="flex bg-white rounded-lg shadow p-4 mb-6">
+                    <RQ1FrequencySeverity data={data} />
+                </div>
+            </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-700 mb-3">
+                    Breach Methods & Severity
+                </h2>
+                <div className="bg-white rounded-lg shadow p-4 mb-6">
+                    <div className="flex justify-between gap-6">
+                        <div className="flex-1">
+                            <RQ2 data={data} />
+                        </div>
+                        <div className="flex-1">
+                            <RQ3 data={data} />
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
     )
 }
