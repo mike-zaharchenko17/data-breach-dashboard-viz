@@ -9,6 +9,7 @@ import RQ2 from "./charts/rq2";
 import RQ3 from "./charts/rq3";
 import RQ1FrequencySeverity from "./charts/frequency-severity-chart";
 import HeatmapManager from "./heatmap-manager";
+import MethodPieChart from "./charts/method-pie";
 
 export interface DashboardContainerProps {
    data: DSVParsedArray<{
@@ -82,7 +83,16 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                         <HeatmapManager data={data} />
                     </div>
                 </div>
-            </div>    
+            </div>
+
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-700 mb-3">
+                    Method Comparison
+                </h2>
+                <div className="bg-white rounded-lg shadow p-4 mb-6">
+                    <MethodPieChart data={data} />
+                </div>
+            </div>
         </div>
     )
 }
