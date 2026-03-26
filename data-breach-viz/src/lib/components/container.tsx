@@ -38,7 +38,8 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 <h1 className="text-2xl font-bold text-slate-800">
                     Data Breach Dashboard
                 </h1>
-                <p className="text-slate-500">2004 - 2022</p>
+                <p className="text-slate-600">2004 - 2022</p>
+                <a className="text-slate-500 hover:text-slate-400" target="_blank" href="https://www.kaggle.com/datasets/thedevastator/data-breaches-a-comprehensive-list">Source (Kaggle)</a>
             </header>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <KPICard label="Total Breaches" value={totalBreaches} />
