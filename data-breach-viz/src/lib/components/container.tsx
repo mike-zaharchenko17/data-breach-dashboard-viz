@@ -9,7 +9,6 @@ import RQ2 from "./charts/rq2";
 import RQ3 from "./charts/rq3";
 import RQ1FrequencySeverity from "./charts/frequency-severity-chart";
 import HeatmapManager from "./heatmap-manager";
-import MethodPieChart from "./charts/method-pie";
 
 export interface DashboardContainerProps {
    data: DSVParsedArray<{
