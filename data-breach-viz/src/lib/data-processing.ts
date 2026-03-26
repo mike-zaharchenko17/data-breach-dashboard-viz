@@ -252,3 +252,31 @@ export function consolidateLongTail<T, K extends keyof T>(
             : otherLabel
     }))
 }
+
+/*
+HEATMAP PIVOT
+
+Transforms data into x, y, z arrays for Plotly heatmap:
+- x: unique values of xKey (columns)
+- y: unique values of yKey (rows)
+- z: 2D matrix where z[i][j] = aggregator(items at y[i], x[j])
+*/
+export function pivotToHeatmap<T>(
+    array: T[],
+    xKey: keyof T,
+    yKey: keyof T,
+    aggregator: (items: T[]) => number
+): { x: string[]; y: string[]; z: number[][] } {
+    const grouped = groupBy2(array, yKey, xKey)
+    const xValues = [...new Set(array.map(item => String(item[xKey])))].filter(Boolean).sort()
+    const yValues = [...new Set(array.map(item => String(item[yKey])))].filter(Boolean).sort()
+
+    const z = yValues.map(yVal =>
+        xValues.map(xVal => {
+            const items = grouped[yVal]?.[xVal] ?? []
+            return aggregator(items)
+        })
+    )
+
+    return { x: xValues, y: yValues, z }
+}
