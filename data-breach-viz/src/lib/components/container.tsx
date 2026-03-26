@@ -82,15 +82,9 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                     <div className="mt-10">
                         <HeatmapManager data={data} />
                     </div>
-                </div>
-            </div>
-
-            <div className="mb-6">
-                <h2 className="text-xl font-semibold text-slate-700 mb-3">
-                    Method Comparison
-                </h2>
-                <div className="bg-white rounded-lg shadow p-4 mb-6">
-                    <MethodPieChart data={data} />
+                    {/* <div className="bg-white rounded-lg shadow p-4 mb-6">
+                        <MethodPieChart data={data} />
+                    </div> */}
                 </div>
             </div>
         </div>
