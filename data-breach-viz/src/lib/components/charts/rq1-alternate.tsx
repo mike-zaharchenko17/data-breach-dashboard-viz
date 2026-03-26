@@ -82,7 +82,13 @@ export default function RQ1({ data } : RQ1Props) {
     return (
         <div className="flex justify-center w-full">
             <Tabs.Root defaultValue="tab1" onValueChange={setActiveTab}>
-                <Tabs.List className="flex justify-between w-[900px] mb-4">
+                <Tabs.Content value="tab1">
+                    <div ref={sumRecordsAreaChartRef} style={{ width: 900, height: 580 }} />
+                </Tabs.Content>
+                <Tabs.Content value="tab2">
+                    <div ref={sumRecordsBarChartRef} style={{ width: 900, height: 580 }} />
+                </Tabs.Content>
+                <Tabs.List className="flex justify-between w-[900px] mb-4 mt-2 px-18">
                     <Tabs.Trigger 
                         value="tab1" 
                         className="px-4 py-2 bg-slate-600 hover:bg-slate-300 data-[state=active]:bg-sky-600 data-[state=active]:text-white rounded-md transition-colors"
@@ -96,12 +102,6 @@ export default function RQ1({ data } : RQ1Props) {
                         Total Loss YoY
                     </Tabs.Trigger>
                 </Tabs.List>
-                <Tabs.Content value="tab1">
-                    <div ref={sumRecordsAreaChartRef} style={{ width: 900, height: 650 }} />
-                </Tabs.Content>
-                <Tabs.Content value="tab2">
-                    <div ref={sumRecordsBarChartRef} style={{ width: 900, height: 650 }} />
-                </Tabs.Content>
             </Tabs.Root>
         </div>
     )
