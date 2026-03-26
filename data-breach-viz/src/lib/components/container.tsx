@@ -40,7 +40,7 @@ export default function DashboardContainer({ data }: DashboardContainerProps) {
                 </h1>
                 <p className="text-slate-500">2004 - 2022</p>
             </header>
-            <div className="grid grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <KPICard label="Total Breaches" value={totalBreaches} />
                 <KPICard label="Total Records" value={formatNumber(totalRecords)} />
                 <KPICard label="Peak Year" value={peakYear} />
