@@ -1,6 +1,6 @@
-import type { DashboardContainerProps } from "./container"
+import type { DashboardContainerProps } from "../container"
 import { useState, useRef, useEffect } from "react"
-import { pivotToHeatmap, consolidateLongTail } from "../data-processing"
+import { pivotToHeatmap, consolidateLongTail } from "../../data-processing"
 import Plotly from "plotly.js-dist-min"
 
 interface HeatmapChartProps extends DashboardContainerProps {}
